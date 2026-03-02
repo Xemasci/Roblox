@@ -10,7 +10,6 @@ local FarmSection = MainTab:AddSection("Auto Farm")
 
 -- Services
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local ProximityPromptService = game:GetService("ProximityPromptService")
 local RemoteHandler = ReplicatedStorage:WaitForChild("RemoteHandler")
 
 local CollectRemote = RemoteHandler:WaitForChild("Collect")
@@ -48,7 +47,7 @@ FarmSection:AddDropdown({
 })
 
 FarmSection:AddToggle({
-    Title = "🚀 Auto-Upgrade",
+    Title = " Auto-Upgrade",
     Description = "Automatically upgrades selected tier",
     Default = false,
     Callback = function(value)
@@ -67,13 +66,12 @@ FarmSection:AddToggle({
 })
 
 FarmSection:AddButton({
-    Title = "Instant Click",
-    Description = "Carry Brainrot",
+    Title = "instant click",
+    Description = "Carry brainrot",
     Callback = function()
-        for _, prompt in pairs(workspace:GetDescendants()) do
-            if prompt:IsA("ProximityPrompt") then
-                fireproximityprompt(prompt)
-                task.wait(0.05) -- กันสแปม
+        for _,v in pairs(workspace:GetDescendants()) do
+            if v:IsA("ProximityPrompt") then
+                fireproximityprompt(v)
             end
         end
     end
