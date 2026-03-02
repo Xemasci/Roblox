@@ -37,15 +37,32 @@ FarmSection:AddToggle({
     end
 })
 
-FarmSection:AddButton({
-    Title = "Auto Upgrade",
-    Description = "Upgrades all plots instantly",
-    Callback = function()
-        for i = 1, 10 do
-            local upgradeString = "Brainrot3:Normal:" .. i .. ":1:2671523883"
-            BrainrotRemote:FireServer("Upgrade", upgradeString)
-            task.wait(0.3)
-        end
+FarmSection:AddDropdown({
+    Title = "Select Upgrade Tier",
+    Description = "Choose upgrade level",
+    Values = {"power1", "power5", "power10"},
+    Default = "power1",
+    Callback = function(value)
+        targetUpgrade = value
+    end
+})
+
+FarmSection:AddToggle({
+    Title = "🚀 Auto-Upgrade",
+    Description = "Automatically upgrades selected tier",
+    Default = false,
+    Callback = function(value)
+        autoUpgrade = value
+        task.spawn(function()
+            while autoUpgrade do
+                game:GetService("ReplicatedStorage")
+                    :WaitForChild("RemoteHandler")
+                    :WaitForChild("Upgrade")
+                    :FireServer(targetUpgrade)
+
+                task.wait(0.1)
+            end
+        end)
     end
 })
 
